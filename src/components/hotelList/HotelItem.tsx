@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { Hotel as IHotel } from '@models/hotel'
+import { Hotel } from '@models/hotel'
 import Flex from '@shared/Flex'
 import ListRow from '@shared/ListRow'
 import Spacing from '@shared/Spacing'
@@ -11,7 +11,7 @@ import { differenceInMilliseconds, parseISO } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Hotel({ hotel }: { hotel: IHotel }) {
+export default function HotelItem({ hotel }: { hotel: Hotel }) {
   const [remainedTime, setRemainedTime] = useState(0)
 
   useEffect(() => {
