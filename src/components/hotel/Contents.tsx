@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 export default function Contents({ contents }: { contents: string }) {
   return (
     <Container>
-      <ReactMarkdown>{contents}</ReactMarkdown>;
+      <ReactMarkdown>{contents}</ReactMarkdown>
     </Container>
   )
 }
