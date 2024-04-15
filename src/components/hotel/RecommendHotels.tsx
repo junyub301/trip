@@ -28,7 +28,7 @@ export default function RecommendHotels({
         {hotelList.map((hotel) => (
           <ListRow
             key={hotel.id}
-            left={<img src={hotel.mainImageURl} alt="" css={imageStyles} />}
+            left={<img src={hotel.mainImageUrl} alt="" css={imageStyles} />}
             contents={
               <ListRow.Texts
                 title={hotel.name}
