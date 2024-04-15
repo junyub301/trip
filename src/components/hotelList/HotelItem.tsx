@@ -72,7 +72,7 @@ export default function HotelItem({ hotel }: { hotel: Hotel }) {
           right={
             <Flex direction="column" align="flex-end">
               <img
-                src={hotel.mainImageURl}
+                src={hotel.mainImageUrl}
                 alt="호텔이미지"
                 css={imageStyles}
               />

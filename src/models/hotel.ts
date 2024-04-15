@@ -4,7 +4,7 @@ export interface Hotel {
   id: string
   images: string[]
   location: { directions: string; pointGeolocation: { x: number; y: number } }
-  mainImageURl: string
+  mainImageUrl: string
   name: string
   price: number
   startRating: number
@@ -16,4 +16,5 @@ export interface Hotel {
       fontColor: string
     }
   }
+  recommendHotels: string[]
 }

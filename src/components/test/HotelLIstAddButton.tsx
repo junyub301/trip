@@ -14,7 +14,7 @@ export default function HotelLIstAddButton() {
   const handleButtonClick = () => {
     const hotels = HOTEL_NAMES.map((hotelName, idx) => ({
       name: hotelName,
-      mainImageURl: IMAGES[Math.floor(Math.random() * IMAGES.length)],
+      mainImageUrl: IMAGES[Math.floor(Math.random() * IMAGES.length)],
       images: IMAGES,
       price: random(130000, 200000),
       startRating: random(1, 5),
