@@ -1,14 +1,17 @@
+import { HOTEL } from '@/mock/data'
 import { Hotel } from '@models/hotel'
 import { COLLECTIONS } from '@constants'
 import {
   collection,
   doc,
+  documentId,
   getDoc,
   getDocs,
   limit,
   query,
   QuerySnapshot,
   startAfter,
+  where,
 } from 'firebase/firestore'
 import { store } from './firebase'
 
@@ -43,4 +46,14 @@ export async function getHotel(id: string) {
     id,
     ...snapshot.data(),
   } as Hotel
+}
+
+export async function getRecommendHotels(hotelIds: string[]) {
+  const recommendQuery = query(
+    collection(store, COLLECTIONS.HOTEL),
+    where(documentId(), 'in', hotelIds),
+  )
+  const snapshot = await getDocs(recommendQuery)
+
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Hotel)
 }
