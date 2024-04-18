@@ -1,3 +1,4 @@
+import { AlertContextProvider } from '@contexts/AlertContext'
 import { Global } from '@emotion/react'
 import globalStyles from '@styles/globalStyles'
 import React from 'react'
@@ -20,7 +21,9 @@ root.render(
     <Global styles={globalStyles} />
     <RecoilRoot>
       <QueryClientProvider client={client}>
-        <App />
+        <AlertContextProvider>
+          <App />
+        </AlertContextProvider>
       </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>,
