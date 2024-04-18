@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Button from './Button'
 import Flex from './Flex'
+import Spacing from './Spacing'
 
 export default function Navbar() {
   const { pathname } = useLocation()
@@ -14,18 +15,32 @@ export default function Navbar() {
   const renderButton = useCallback(() => {
     if (user != null) {
       return (
-        <Link to="/my">
-          <img
-            src={
-              user.photoURL ??
-              'https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-64.png'
-            }
-            alt="유저이미지"
-            width={40}
-            height={40}
-            style={{ borderRadius: '100%' }}
-          />
-        </Link>
+        <Flex align="center">
+          <Link to="/my">
+            <img
+              src={
+                user.photoURL ??
+                'https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-64.png'
+              }
+              alt="유저이미지"
+              width={40}
+              height={40}
+              style={{ borderRadius: '100%' }}
+            />
+          </Link>
+          <Spacing size={4} direction="horizontal" />
+          <Link to="settings">
+            <img
+              src={
+                'https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-06-64.png'
+              }
+              alt="유저이미지"
+              width={40}
+              height={40}
+              style={{ borderRadius: '100%' }}
+            />
+          </Link>
+        </Flex>
       )
     }
     if (showSignButton) {

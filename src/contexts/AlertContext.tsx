@@ -34,7 +34,7 @@ export function AlertContextProvider({
 }) {
   const [alertState, setAlertState] = useState(defaultValues)
 
-  const $portal_root = document.getElementById('root-portal')
+  const $portal_root = document.getElementById('root_portal')
 
   const close = useCallback(() => {
     setAlertState(defaultValues)

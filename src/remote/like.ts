@@ -92,3 +92,13 @@ export async function toggleLike({
     setDoc(doc(collection(store, COLLECTIONS.LIKE)), newLike)
   }
 }
+
+export function updateOrder(likes: Like[]) {
+  const batch = writeBatch(store)
+
+  likes.forEach((like, index) => {
+    batch.update(doc(collection(store, COLLECTIONS.LIKE), like.id), {
+      order: like.order,
+    })
+  })
+}
