@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import useLike from '@hooks/like/useLike'
 import useShare from '@hooks/useShare'
 import { Hotel } from '@models/hotel'
 import Flex from '@shared/Flex'
@@ -8,13 +9,27 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 export default function ActionButtons({ hotel }: { hotel: Hotel }) {
   const share = useShare()
-  const { name, comment, mainImageUrl } = hotel
+  const { data: likes, mutate: like } = useLike()
+  const { name, comment, mainImageUrl, id } = hotel
+  const isLike = Boolean(likes?.find((like) => like.hotelId === hotel.id))
   return (
     <Flex css={containerStyles}>
       <Button
         label="찜하기"
-        onClick={() => {}}
-        iconUrl="https://cdn4.iconfinder.com/data/icons/twitter-29/512/166_Heart_Love_Like_Twitter-64.png"
+        onClick={() => {
+          like({
+            hotel: {
+              name,
+              mainImageUrl,
+              id,
+            },
+          })
+        }}
+        iconUrl={
+          isLike
+            ? 'https://cdn4.iconfinder.com/data/icons/twitter-29/512/166_Heart_Love_Like_Twitter-64.png'
+            : 'https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/heart-64.png'
+        }
       />
       <Button
         label="공유하기"
