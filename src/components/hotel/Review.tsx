@@ -6,12 +6,13 @@ import Spacing from '@shared/Spacing'
 import Text from '@shared/Text'
 import TextField from '@shared/TextField'
 import { format } from 'date-fns'
-import { useCallback } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 import useReview from './hooks/useReview'
 
 export default function Review({ hotelId }: { hotelId: string }) {
-  const { data: reviews, isLoading } = useReview({ hotelId })
+  const { data: reviews, isLoading, write, remove } = useReview({ hotelId })
   const user = useUser()
+  const [text, setText] = useState('')
   const reviewRows = useCallback(() => {
     if (reviews?.length === 0) {
       return (
@@ -33,6 +34,7 @@ export default function Review({ hotelId }: { hotelId: string }) {
       <ul>
         {reviews?.map((review) => (
           <ListRow
+            key={review.id}
             left={
               review.user.photoURL != null ? (
                 <img src={review.user.photoURL} alt="" width={40} height={40} />
@@ -44,12 +46,26 @@ export default function Review({ hotelId }: { hotelId: string }) {
                 subTitle={format(review.createdAt, 'yyyy-MM-dd')}
               />
             }
-            right={review.userId === user?.uid ? <Button>삭제</Button> : null}
+            right={
+              review.userId === user?.uid ? (
+                <Button
+                  onClick={() => {
+                    remove({ reviewId: review.id, hotelId: review.hotelId })
+                  }}
+                >
+                  삭제
+                </Button>
+              ) : null
+            }
           />
         ))}
       </ul>
     )
   }, [reviews, user])
+
+  const handleTextChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value)
+  }, [])
 
   if (isLoading === true) return null
 
@@ -62,10 +78,20 @@ export default function Review({ hotelId }: { hotelId: string }) {
       {reviewRows()}
       {user != null ? (
         <div style={{ padding: '0 24px' }}>
-          <TextField />
+          <TextField value={text} onChange={handleTextChange} />
           <Spacing size={6} />
           <Flex justify="flex-end">
-            <Button disabled>작성</Button>
+            <Button
+              disabled={text === ''}
+              onClick={async () => {
+                const success = await write(text)
+                if (success) {
+                  setText('')
+                }
+              }}
+            >
+              작성
+            </Button>
           </Flex>
         </div>
       ) : null}
