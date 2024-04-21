@@ -4,6 +4,8 @@ import useLoadKakao from '@hooks/useLoadKakao'
 import Hotel from '@pages/Hotel'
 import HotelList from '@pages/HotelList'
 import My from '@pages/My'
+import ReservationPage from '@pages/Reservation'
+import SchedulePage from '@pages/Schedule'
 import SettingsPage from '@pages/settings'
 import LikePage from '@pages/settings/like'
 import Signin from '@pages/Signin'
@@ -44,6 +46,22 @@ function App() {
               element={
                 <PrivateRoute>
                   <LikePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/schedule"
+              element={
+                <PrivateRoute>
+                  <SchedulePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/reservation"
+              element={
+                <PrivateRoute>
+                  <ReservationPage />
                 </PrivateRoute>
               }
             />
