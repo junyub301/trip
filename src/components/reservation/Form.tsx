@@ -4,8 +4,12 @@ import Select from '@shared/Select'
 import Spacing from '@shared/Spacing'
 import Text from '@shared/Text'
 import TextField from '@shared/TextField'
-import { useCallback } from 'react'
+import { Fragment, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+
+type FormData = {
+  [key: string]: string
+}
 
 export default function Form({
   forms,
@@ -13,21 +17,20 @@ export default function Form({
   buttonLabel,
 }: {
   forms: Hotel['forms']
-  onSubmit: () => void
+  onSubmit: (formValues: FormData) => void
   buttonLabel: string
 }) {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ mode: 'onBlur' })
+  } = useForm<FormData>({ mode: 'onBlur' })
 
   const component = useCallback(
     (form: ReservationForm) => {
       if (form.type === 'TEXT_FIELD') {
         return (
           <TextField
-            key={form.id}
             label={form.label}
             hasError={errors[form.id] != null}
             helpMessage={
@@ -42,7 +45,6 @@ export default function Form({
       } else if (form.type === 'SELECT') {
         return (
           <Select
-            key={form.id}
             label={form.label}
             options={form.options}
             {...register(form.id, {
@@ -81,7 +83,15 @@ export default function Form({
   return (
     <div style={{ padding: 24 }}>
       <Text bold>예약정보</Text>
-      <form>{forms.map((form) => component(form))}</form>
+      <Spacing size={16} />
+      <form>
+        {forms.map((form) => (
+          <Fragment key={form.id}>
+            {component(form)}
+            <Spacing size={8} />
+          </Fragment>
+        ))}
+      </form>
       <Spacing size={80} />
       <FixedBottomButton label={buttonLabel} onClick={handleSubmit(onSubmit)} />
     </div>
