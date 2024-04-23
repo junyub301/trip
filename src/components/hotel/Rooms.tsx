@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import useUser from '@hooks/auth/useUser'
 import Button from '@shared/Button'
 import Flex from '@shared/Flex'
+import withSuspense from '@shared/hocs/withSuspense'
 import ListRow from '@shared/ListRow'
 import Spacing from '@shared/Spacing'
 import Tag from '@shared/Tag'
@@ -13,7 +14,7 @@ import { stringify } from 'qs'
 import { useNavigate } from 'react-router-dom'
 import useRooms from './hooks/useRooms'
 
-export default function Rooms({ hotelId }: { hotelId: string }) {
+function Rooms({ hotelId }: { hotelId: string }) {
   const { data } = useRooms({ hotelId })
   const user = useUser()
   const navigate = useNavigate()
@@ -109,3 +110,4 @@ const imageStyles = css`
   object-fit: cover;
   border-radius: 4px;
 `
+export default withSuspense(Rooms, { fallback: <div>룸 불러오는중...</div> })
